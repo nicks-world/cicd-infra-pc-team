@@ -1,0 +1,9 @@
+# runner.yaml
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: Runner
+metadata:
+  name: repo-runner-petclinic
+  namespace: lob-petclinic-cicd
+spec:
+  repository: nicks-world/petclinic
+  env: []
