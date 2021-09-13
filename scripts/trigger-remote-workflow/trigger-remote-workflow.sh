@@ -7,8 +7,8 @@
 # cicd-infra PAT (CICD_INFRA_SVC_ACCT_PAT) added (automagically handled during onboarding)
 
 set -x
-WORKFLOW_NAME=$1
-CICD_INFRA_SVC_ACCT_PAT=$2 
+# WORKFLOW_NAME=$1
+# CICD_INFRA_SVC_ACCT_PAT=$2 
 
 PAYLOAD='{"ref":"master",
           "inputs": {
@@ -20,7 +20,7 @@ PAYLOAD='{"ref":"master",
 ACCEPT_HEADER='Accept: application/vnd.github.v3+json'
 AUTHORIZATION_HEADER="Authorization: token ${CICD_INFRA_SVC_ACCT_PAT}"
 
-REMOTE_WORKFLOW_CICD_INFRA_URL=https://api.github.com/repos/hippyod/cicd-infra/actions/workflows/${WORKFLOW_NAME}.yml/dispatches
+REMOTE_WORKFLOW_CICD_INFRA_URL=https://api.github.com/repos/${TEAM_INFRA_REPOSITORY}/actions/workflows/${WORKFLOW_NAME}.yml/dispatches
 
 curl -X POST -H "${ACCEPT_HEADER}" -H "${AUTHORIZATION_HEADER}" "${REMOTE_WORKFLOW_CICD_INFRA_URL}" -d "${PAYLOAD}"
 set +x
