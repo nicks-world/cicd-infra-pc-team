@@ -8,7 +8,7 @@
 
 set -x
 
-PAYLOAD='{"ref":"master",
+PAYLOAD='{"ref":"main",
           "inputs": {
             "repo": "'${GITHUB_REPOSITORY}'",
             "ref": "'${GITHUB_REF}'"
