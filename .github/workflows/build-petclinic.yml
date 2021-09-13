@@ -1,0 +1,43 @@
+# Github Action Workflow: Build
+# About this workflow: Example workflow that expects OPENJDK11, and Gradle for Build Tasks.
+# What the workflow does: Take a Java/Gradle project, and run build tests for any commit to any branch.
+
+name: build-petclinic
+on: 
+  push:
+    branches:
+    - development
+  pull_request:
+    branches:
+    - development
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: 'repo: Repository to be built'
+        required: true
+      ref:
+        description: 'ref: hash, tag, or branch in repo'
+        required: true
+        default: development
+
+
+# TODO - on branch delete, check for namespace in "dev-cluster"
+# Decide on 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # [cicd, jdk11, small]
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: $${{ github.event.inputs.repo }}
+        ref: ${{ github.event.inputs.ref }}
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+    - name: Build with Gradle
+        run: ./gradlew build
