@@ -7,8 +7,6 @@
 # cicd-infra PAT (CICD_INFRA_SVC_ACCT_PAT) added (automagically handled during onboarding)
 
 set -x
-# WORKFLOW_NAME=$1
-# CICD_INFRA_SVC_ACCT_PAT=$2 
 
 PAYLOAD='{"ref":"master",
           "inputs": {
