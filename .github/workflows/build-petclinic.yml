@@ -20,7 +20,7 @@ on:
 
 jobs:
   build:
-    runs-on: [ "cicd" ]
+    runs-on: [ "pc" ]
     env:
       BUILD_REPO: ${{ github.event.inputs.repo }}
     steps:
