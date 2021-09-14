@@ -20,7 +20,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # [cicd, jdk11, small]
+    runs-on: [ "cicd" ]
     env:
       BUILD_REPO: ${{ github.event.inputs.repo }}
     steps:
