@@ -43,18 +43,15 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build
-      working-directory: ${{ env.CICD_REPO_SCRIPTS_DIR }}
+      working-directory: 
       run: |
-        build.sh
+        ${CICD_REPO_SCRIPTS_DIR}/build.sh
     - name: Test
-      working-directory: ${{ env.CICD_REPO_SCRIPTS_DIR }}
       run: |
-        test.sh
+        ${CICD_REPO_SCRIPTS_DIR}/test.sh
     - name: Scan
-      working-directory: ${{ env.CICD_REPO_SCRIPTS_DIR }}
       run: |
-        scan.sh
+        ${CICD_REPO_SCRIPTS_DIR}/scan.sh
     - name: Build and Push Image
-      working-directory: ${{ env.CICD_REPO_SCRIPTS_DIR }}
       run: |
-        build-image.sh
+        ${CICD_REPO_SCRIPTS_DIR}/build-image.sh
