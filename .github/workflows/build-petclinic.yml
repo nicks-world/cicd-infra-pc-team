@@ -17,16 +17,19 @@ on:
 jobs:
   build:
     runs-on: [ "pc" ]
-    env:
-      BUILD_REPO: ${{ github.event.inputs.repo }}
-      WORKING_DIR: ${{ jobs.build.env.GITHUB_WORKSPACE }}/${{ env.BUILD_REPO }}
-      CICD_REPO_DIR: ${{ env.GITHUB_WORKSPACE }}/${{ env.GITHUB_REPO }}
-      CICD_REPO_SCRIPTS_DIR: ${{ env.CICD_REPO_DIR }}/scripts/build-to-dev
     steps:
-    - uses: actions/checkout@v2
+    - name: Setup environment
+      run: |
+        echo "BUILD_REPO=${{ github.event.inputs.repo }}" >> ${GITHUB_ENV}
+        echo "GITHUB_WORKSPACE=${BUILD_REPO}" >> ${GITHUB_ENV}
+        echo "CICD_REPO_DIR=${GITHUB_WORKSPACE}/${BUILD_REPO}" >> ${GITHUB_ENV}
+        echo "CICD_REPO_SCRIPTS_DIR=${CICD_REPO_DIR}/scripts/build-to-dev" >> ${GITHUB_ENV}
+    - name: Checkout CICD Infra
+      uses: actions/checkout@v2
       with:
         path: ${{ env.CICD_REPO_DIR }}
-    - uses: actions/checkout@v2
+    - name: Checkout ${{ BUILD_REPO }}
+      uses: actions/checkout@v2
       with:
         repository: ${{ env.BUILD_REPO }}
         ref: ${{ github.event.inputs.ref }}
