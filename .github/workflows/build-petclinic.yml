@@ -3,7 +3,7 @@
 # What the workflow does: Take a Java/Gradle project, and run build tests for any commit to any branch.
 
 name: build-petclinic
-on: 
+on:
   workflow_dispatch:
     inputs:
       repo:
@@ -14,29 +14,42 @@ on:
         required: true
         default: development
 
-
-# TODO - on branch delete, check for namespace in "dev-cluster"
-# Decide on 
-
 jobs:
   build:
     runs-on: [ "pc" ]
     env:
       BUILD_REPO: ${{ github.event.inputs.repo }}
+      WORKING_DIR: ${{ env.GITHUB_WORKSPACE }}/${{ env.BUILD_REPO }}
+      CICD_REPO_DIR: ${{ env.GITHUB_WORKSPACE }}/${{ env.GITHUB_REPO }}
+      CICD_REPO_SCRIPTS_DIR: ${{ env.CICD_REPO_DIR }}/scripts/build-to-dev
     steps:
+    - uses: actions/checkout@v2
+      with:
+        path: ${{ env.CICD_REPO_DIR }}
     - uses: actions/checkout@v2
       with:
         repository: ${{ env.BUILD_REPO }}
         ref: ${{ github.event.inputs.ref }}
-        path: ${{ env.BUILD_REPO }}
+        path: ${{ env.WORKING_DIR }}
         token: ${{ secrets.CICD_TOKEN }}
     - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
-    - name: Build with Gradle
+    - name: Build
+      working-directory: ${{ env.CICD_REPO_SCRIPTS_DIR }}
       run: |
-        ${GITHUB_WORKSPACE}/${BUILD_REPO}/gradlew build
+        build.sh
+    - name: Test
+      working-directory: ${{ env.CICD_REPO_SCRIPTS_DIR }}
+      run: |
+        test.sh
+    - name: Scan
+      working-directory: ${{ env.CICD_REPO_SCRIPTS_DIR }}
+      run: |
+        scan.sh
+    - name: Build and Push Image
+      working-directory: ${{ env.CICD_REPO_SCRIPTS_DIR }}
+      run: |
+        build-image.sh
