@@ -22,9 +22,9 @@ jobs:
       run: |
         set -x
         echo "BUILD_REPO=${{ github.event.inputs.repo }}" >> ${GITHUB_ENV}
-        echo "WORKING_DIR=${GITHUB_WORKSPACE}/${BUILD_REPO}" >> ${GITHUB_ENV}
-        echo "CICD_REPO_DIR=${GITHUB_WORKSPACE}/${BUILD_REPO}" >> ${GITHUB_ENV}
-        echo "CICD_REPO_SCRIPTS_DIR=${CICD_REPO_DIR}/scripts/build-to-dev" >> ${GITHUB_ENV}
+        echo "WORKING_DIR=${GITHUB_WORKSPACE}/${{ github.event.inputs.repo }}" >> ${GITHUB_ENV}
+        echo "CICD_REPO_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPO}" >> ${GITHUB_ENV}
+        echo "CICD_REPO_SCRIPTS_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPO}/scripts/build-to-dev" >> ${GITHUB_ENV}
         set +x
     - name: Checkout CICD Infra
       uses: actions/checkout@v2
