@@ -23,8 +23,11 @@ jobs:
         set -x
         echo "BUILD_REPO=${{ github.event.inputs.repo }}" >> ${GITHUB_ENV}
         echo "WORKING_DIR=${GITHUB_WORKSPACE}/${{ github.event.inputs.repo }}" >> ${GITHUB_ENV}
+
         echo "CICD_REPO_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}" >> ${GITHUB_ENV}
         echo "CICD_REPO_SCRIPTS_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}/scripts/build-to-dev" >> ${GITHUB_ENV}
+
+        echo "CICD_NAMESPACE=pc-team-cicd" >> ${GITHUB_ENV}
         set +x
     - name: Checkout CICD Infra
       uses: actions/checkout@v2
@@ -43,15 +46,18 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build
-      working-directory: 
+      working-directory: ${BUILD_REPO}
       run: |
         ${CICD_REPO_SCRIPTS_DIR}/build.sh
     - name: Test
+      working-directory: ${BUILD_REPO}
       run: |
         ${CICD_REPO_SCRIPTS_DIR}/test.sh
     - name: Scan
+      working-directory: ${BUILD_REPO}
       run: |
         ${CICD_REPO_SCRIPTS_DIR}/scan.sh
     - name: Build and Push Image
+      working-directory: ${BUILD_REPO}
       run: |
         ${CICD_REPO_SCRIPTS_DIR}/build-image.sh
