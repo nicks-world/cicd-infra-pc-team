@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: [ "pc" ]
+    runs-on: [ "team-java-build-small" ]
     steps:
     - name: Setup environment
       run: |

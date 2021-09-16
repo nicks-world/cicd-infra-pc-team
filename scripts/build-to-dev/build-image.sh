@@ -2,16 +2,17 @@
 # Build from image
 
 set -x
-REPO_NAME=$(cut -d '/' -f2 :"${BUILD_REPO}")
+REPO_NAME=${BUILD_REPO#*/}
 
 HAS_BC=$(oc get bc --no-headers -o custom-columns=:.metadata.name --ignore-not-found ${REPO_NAME} -n ${CICD_NAMESPACE})
 if [[ -z ${HAS_BC} ]]
 then
     oc new-build --name ${REPO_NAME} \
                  --binary=true \
-                 --label=${BUILD_REPO} \
+                 --labels='repo=${BUILD_REPO},component=${REPO_NAME}' \
                  --strategy=docker \
-                 --to-docker \
+                 --to-docker
+                 --to=${REPO_NAME}:DEV
                  -n ${CICD_NAMESPACE}
 fi
 
