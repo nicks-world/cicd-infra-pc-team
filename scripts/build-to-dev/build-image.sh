@@ -9,7 +9,7 @@ if [[ -z ${HAS_BC} ]]
 then
     oc new-build --name ${REPO_NAME} \
                  --binary=true \
-                 --labels='repo=${BUILD_REPO},component=${REPO_NAME}' \
+                 --labels="repo=${BUILD_REPO},component=${REPO_NAME}" \
                  --strategy=docker \
                  --to-docker \
                  --to=${REPO_NAME}:DEV \
