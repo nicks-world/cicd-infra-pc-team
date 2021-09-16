@@ -11,8 +11,8 @@ then
                  --binary=true \
                  --labels='repo=${BUILD_REPO},component=${REPO_NAME}' \
                  --strategy=docker \
-                 --to-docker
-                 --to=${REPO_NAME}:DEV
+                 --to-docker \
+                 --to=${REPO_NAME}:DEV \
                  -n ${CICD_NAMESPACE}
 fi
 
