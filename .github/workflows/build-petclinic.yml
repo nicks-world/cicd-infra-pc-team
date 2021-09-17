@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: [  "nlj", "build", "m2-cache" ]
+    runs-on: [  "nlj", "build", "runner-cache" ]
     steps:
     - name: Setup environment
       run: |
