@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: [  "pc", "build" ]
+    runs-on: [  "nlj", "build", "m2-cache" ]
     steps:
     - name: Setup environment
       run: |
