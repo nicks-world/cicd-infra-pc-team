@@ -28,7 +28,7 @@ jobs:
         echo "CICD_REPO_BUILD_SCRIPTS_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}/scripts/build-to-dev" >> ${GITHUB_ENV}
         echo "CICD_REPO_SHARED_SCRIPTS_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}/scripts/shared" >> ${GITHUB_ENV}
 
-        echo "DEPLOY_TO_NAMESPACE=pc-petclinic" >> ${GITHUB_ENV}
+        echo "DEPLOY_TO_NAMESPACE=pc-petclinic-dev" >> ${GITHUB_ENV}
         set +x
     - name: Checkout CICD Infra
       uses: actions/checkout@v2
