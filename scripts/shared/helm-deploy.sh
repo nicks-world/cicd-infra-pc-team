@@ -1,2 +1,2 @@
 oc project ${CICD_NAMESPACE}
-helm upgrade --install petclinic
+helm upgrade --install petclinic ./
