@@ -25,7 +25,8 @@ jobs:
         echo "WORKING_DIR=${GITHUB_WORKSPACE}/${{ github.event.inputs.repo }}" >> ${GITHUB_ENV}
 
         echo "CICD_REPO_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}" >> ${GITHUB_ENV}
-        echo "CICD_REPO_SCRIPTS_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}/scripts/build-to-dev" >> ${GITHUB_ENV}
+        echo "CICD_REPO_BUILD_SCRIPTS_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}/scripts/build-to-dev" >> ${GITHUB_ENV}
+        echo "CICD_REPO_SHARED_SCRIPTS_DIR=${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}/scripts/shared" >> ${GITHUB_ENV}
 
         echo "CICD_NAMESPACE=pc-team-cicd" >> ${GITHUB_ENV}
         set +x
@@ -48,16 +49,20 @@ jobs:
     - name: Build
       working-directory: ${{ env.WORKING_DIR }}
       run: |
-        ${CICD_REPO_SCRIPTS_DIR}/build.sh
+        ${CICD_REPO_BUILD_SCRIPTS_DIR}/build.sh
     - name: Test
       working-directory: ${{ env.WORKING_DIR }}
       run: |
-        ${CICD_REPO_SCRIPTS_DIR}/test.sh
+        ${CICD_REPO_BUILD_SCRIPTS_DIR}/test.sh
     - name: Scan
       working-directory: ${{ env.WORKING_DIR }}
       run: |
-        ${CICD_REPO_SCRIPTS_DIR}/scan.sh
+        ${CICD_REPO_BUILD_SCRIPTS_DIR}/scan.sh
     - name: Build and Push Image
       working-directory: ${{ env.WORKING_DIR }}
       run: |
-        ${CICD_REPO_SCRIPTS_DIR}/build-image.sh
+        ${CICD_REPO_BUILD_SCRIPTS_DIR}/build-image.sh
+    - name: Deploy to Cluster
+      working-directory: ${{ env.WORKING_DIR }}
+      run: |
+        ${CICD_REPO_SHARED_SCRIPTS_DIR}/helm-deploy.sh
