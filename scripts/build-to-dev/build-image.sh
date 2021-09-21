@@ -21,6 +21,6 @@ else
     cp ${CICD_REPO_BUILD_SCRIPTS_DIR}/docker/Dockerfile.java11-gradle ./Dockerfile
 fi
 
-oc start-build ${REPO_NAME} --from-dir=. --wait --follow -n ${CICD_NAMESPACE}
+oc start-build ${REPO_NAME} --from-dir=. --wait --follow -n ${DEPLOY_TO_NAMESPACE}
 
 set +x
