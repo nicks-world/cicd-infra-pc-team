@@ -11,7 +11,7 @@ then
                  --binary=true \
                  --labels="repo=${BUILD_REPO//\//_},component=${REPO_NAME}" \
                  --strategy=docker \
-                 -n ${CICD_NAMESPACE}
+                 -n ${DEPLOY_TO_NAMESPACE}
 fi
 
 if [[ -f pom.xml ]]
