@@ -4,7 +4,7 @@
 set -x
 REPO_NAME=${BUILD_REPO#*/}
 
-HAS_BC=$(oc get bc --no-headers -o custom-columns=:.metadata.name --ignore-not-found ${REPO_NAME} -n ${CICD_NAMESPACE})
+HAS_BC=$(oc get bc --no-headers -o custom-columns=:.metadata.name --ignore-not-found ${REPO_NAME} -n ${DEPLOY_TO_NAMESPACE})
 if [[ -z ${HAS_BC} ]]
 then
     oc new-build --name ${REPO_NAME} \
@@ -16,9 +16,9 @@ fi
 
 if [[ -f pom.xml ]]
 then
-    cp ${CICD_REPO_SCRIPTS_DIR}/docker/Dockerfile.java11-mvn ./Dockerfile
+    cp ${CICD_REPO_BUILD_SCRIPTS_DIR}/docker/Dockerfile.java11-mvn ./Dockerfile
 else
-    cp ${CICD_REPO_SCRIPTS_DIR}/docker/Dockerfile.java11-gradle ./Dockerfile
+    cp ${CICD_REPO_BUILD_SCRIPTS_DIR}/docker/Dockerfile.java11-gradle ./Dockerfile
 fi
 
 oc start-build ${REPO_NAME} --from-dir=. --wait --follow -n ${CICD_NAMESPACE}
