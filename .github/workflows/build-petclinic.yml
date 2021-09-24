@@ -13,7 +13,10 @@ on:
         description: 'ref: hash, tag, or branch in repo'
         required: true
         default: development
-
+      codebase:
+        description: 'Platform/language of source to build'
+        required: true
+        default: 'java11'
 jobs:
   build:
     runs-on: [  "pc", "build" ]
@@ -48,8 +51,9 @@ jobs:
         distribution: 'adopt'
     - name: Build
       working-directory: ${{ env.WORKING_DIR }}
-      run: |
-        ${CICD_REPO_BUILD_SCRIPTS_DIR}/build.sh
+      uses: nicks-world/cicd-infra/build-to-dev/build@v1
+      with:
+        codebase: 'java11'
     - name: Test
       working-directory: ${{ env.WORKING_DIR }}
       run: |
