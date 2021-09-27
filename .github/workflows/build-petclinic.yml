@@ -50,7 +50,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build
-      uses: nicks-world/cicd-infra/build-to-dev/build@main
+      uses: nicks-world/cicd-infra/actions/build-to-dev/build@main
       with:
         codebase: 'java11'
         workingDir: ${{ env.WORKING_DIR }}
