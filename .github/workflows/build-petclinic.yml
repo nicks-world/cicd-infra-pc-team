@@ -51,7 +51,7 @@ jobs:
         distribution: 'adopt'
     - name: Build
       working-directory: ${{ env.WORKING_DIR }}
-      uses: nicks-world/cicd-infra/build-to-dev/build@v1
+      uses: nicks-world/cicd-infra/build-to-dev/build@main
       with:
         codebase: 'java11'
     - name: Test
