@@ -49,11 +49,11 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    # - name: Build
-    #   uses: nicks-world/cicd-infra/build-to-dev/build
-    #   with:
-    #     codebase: 'java11'
-    #     workingDir: ${{ env.WORKING_DIR }}
+    - name: Build
+      uses: nicks-world/cicd-infra/build-to-dev/build
+      with:
+        codebase: 'java11'
+        workingDir: ${{ env.WORKING_DIR }}
     - name: Test
       working-directory: ${{ env.WORKING_DIR }}
       run: |
