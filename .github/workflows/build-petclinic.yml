@@ -2,7 +2,7 @@
 # About this workflow: Example workflow that expects OPENJDK11, and Gradle for Build Tasks.
 # What the workflow does: Take a Java/Gradle project, and run build tests for any commit to any branch.
 
-name: build-petclinic
+name: 'Build petclinic'
 on:
   workflow_dispatch:
     inputs:
